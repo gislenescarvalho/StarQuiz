@@ -1,0 +1,120 @@
+/* @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700'); */
+
+html,
+body {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -ms-overflow-x: hidden;
+  overflow-x: hidden;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* clip element visibility, making it accessible to screen reader only */
+.clipped {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden;
+}
+
+.absolute--center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.shadow-1 {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+/*
+  Classes globais: elementos gerais de layout que não são do Tachyons
+*/
+.mc {
+  max-width: 296px;
+}
+
+/* --breakpoint-not-small */
+@media screen and (min-width: 48em) {
+  .mc {
+    max-width: 736px;
+  }
+}
+
+/* --breakpoint-medium */
+@media screen and (min-width: 64em) and (max-width: 85.375em) {
+  .mc {
+    max-width: 1000px;
+  }
+}
+
+/* --breakpoint-large */
+@media screen and (min-width: 85.375em) {
+  .mc {
+    max-width: 1280px;
+  }
+}
+/*
+(296*100)/320 => 92,5%
+(736*100)/768 => 95,83%
+(1000*100)/1024 => 97,65%
+(1280*100)/1366 => 93,70%
+ */
+
+.rc-tooltip {
+  opacity: 1 !important;
+}
+
+.rc-tooltip-inner {
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 6px 10px 0 rgba(0, 0, 0, 0.14);
+  border: none !important;
+}
+
+.rc-tooltip-placement-top .rc-tooltip-arrow,
+.rc-tooltip-placement-topLeft .rc-tooltip-arrow,
+.rc-tooltip-placement-topRight .rc-tooltip-arrow {
+  border-top-color: #fff !important;
+}
+
+.rc-tooltip-placement-leftTop .rc-tooltip-arrow {
+  top: 12% !important;
+  margin-top: 0 !important;
+  border-left-color: #fff !important;
+  border-width: 16px 0 16px 10px !important;
+}
+
+.rc-tooltip-placement-right .rc-tooltip-arrow,
+.rc-tooltip-placement-rightTop .rc-tooltip-arrow,
+.rc-tooltip-placement-rightBottom .rc-tooltip-arrow {
+  left: -6px !important;
+  margin-top: -25px !important;
+  border-right-color: #fff !important;
+  border-width: 12px 10px 12px 0 !important;
+}
+.rc-tooltip-placement-left .rc-tooltip-arrow,
+.rc-tooltip-placement-leftBottom .rc-tooltip-arrow {
+  right: -6px !important;
+  margin-top: -25px !important;
+  border-left-color: #fff !important;
+  border-width: 16px 0 16px 10px !important;
+}
+
+.rc-tooltip-placement-bottom .rc-tooltip-arrow,
+.rc-tooltip-placement-bottomLeft .rc-tooltip-arrow,
+.rc-tooltip-placement-bottomRight .rc-tooltip-arrow {
+  border-bottom-color: #fff !important;
+}
