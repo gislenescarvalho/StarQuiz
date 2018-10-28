@@ -1,0 +1,21 @@
+.rankingWrapper {
+  min-width: 500px;
+  padding: 1rem;
+  color: #000000;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.content {
+  margin-top: 2rem;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

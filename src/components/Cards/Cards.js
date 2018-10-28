@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import styles from "./Cards.module.css";
+import { string, func } from "prop-types";
 
 class Cards extends Component {
   render() {
@@ -7,15 +9,21 @@ class Cards extends Component {
         <img
           src="http://tachyons.io/img/cat-720.jpg"
           class="w-100 db"
-          alt="Closeup photo of a tabby cat yawning."
+          alt="Cat"
         />
-        <div class="pa3">
-          <a href="#" class="link dim lh-title">
-            15 things every cat owner should know
+        <div class="flex items-center justify-center pa4">
+          <a
+            href="#0"
+            class="f5 no-underline dark-blue bg-animate hover-bg-white hover-white inline-flex items-center pa3 ba br2 border-box mr4"
+          >
+            <span className={styles.question}>?</span>
           </a>
-          <small class="gray db pv2">
-            AMP - <time>6 hours ago</time>
-          </small>
+          <a
+            href="#0"
+            class="f5 no-underline dark-green bg-animate hover-bg-white hover-white inline-flex items-center pa3 ba br2 border-box"
+          >
+            <span className={styles.more}>...</span>
+          </a>
         </div>
       </article>
     );

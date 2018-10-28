@@ -1,0 +1,17 @@
+.question {
+  color: #00449e;
+  height: 25px;
+  width: 25px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.more {
+  color: #137752;
+  height: 25px;
+  width: 25px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}

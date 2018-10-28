@@ -1,0 +1,157 @@
+.contentInstruction::-webkit-scrollbar-track {
+  background-color: #ffffff;
+}
+
+.contentInstruction::-webkit-scrollbar {
+  width: 8px;
+  height: 137px;
+  background-color: #c2c2c2;
+}
+
+.contentInstruction::-webkit-scrollbar-thumb {
+  border-radius: 3.5px;
+  background-color: #c2c2c2;
+}
+
+.contentInstruction {
+  width: 496px;
+  height: 255px;
+  scrollbar-base-color: #c0c0c0;
+  scrollbar-base-color: #c0c0c0;
+  scrollbar-3dlight-color: #c0c0c0;
+  scrollbar-highlight-color: #c0c0c0;
+  scrollbar-track-color: #e5e5e5;
+  scrollbar-arrow-color: #c0c0c0;
+  scrollbar-shadow-color: #c0c0c0;
+}
+
+.contentTitle {
+  font-family: Montserrat;
+  font-size: 20px;
+}
+
+.paddingBodyInstruction {
+  font-family: Montserrat;
+  font-size: 14px;
+  text-align: left;
+  line-height: 1.5;
+  padding: 8px 0;
+}
+
+.modalInstruction {
+  width: 620px;
+  height: 600px;
+  padding: 23px 50px !important;
+  position: absolute;
+  border-radius: 4px;
+}
+
+.closeModal {
+  position: absolute;
+  right: 12px;
+  top: 25px;
+  width: 40px;
+}
+
+.alignButton {
+  justify-content: center;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -o-flex;
+  display: flex;
+  padding-top: 16px;
+}
+
+.buttonConfirm {
+  font-family: "Montserrat";
+  font-size: 18px;
+  color: #000000;
+  text-align: center;
+  cursor: pointer;
+  width: 396px;
+  height: 42px;
+  border-radius: 25px;
+  background-color: #fee100;
+}
+
+.buttonConfirm:hover {
+  background-color: #f7ff47;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.buttonConfirm:focus {
+  background-color: #febc00;
+}
+
+.line {
+  width: 470px;
+  height: 1px;
+  background-color: #404040;
+  margin: 10px 10px;
+}
+
+@media screen and (max-width: 1023px) {
+  .closeModal {
+    top: 15px;
+  }
+
+  .buttonConfirm {
+    font-size: 14px;
+  }
+
+  .paddingBodyInstruction {
+    padding: 10px 0;
+  }
+  .modalInstruction {
+    width: 280px !important;
+    height: 500px !important;
+    padding: 15px 15px 15px 15px !important;
+  }
+  .contentTitleInstruction {
+    font-size: 20px;
+    width: 215px;
+    height: 40px;
+    padding-left: 10px;
+    padding-top: 5px;
+  }
+
+  .contentInstruction {
+    width: 260px;
+    height: 400px;
+    overflow: auto;
+  }
+
+  .line {
+    width: 200px;
+    height: 1px;
+    margin-left: 20px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .modalInstruction {
+    width: 500px !important;
+    height: 560px !important;
+    padding: 15px 15px 15px 15px !important;
+  }
+  .contentTitleInstruction {
+    font-size: 20px;
+    width: 215px;
+    height: 40px;
+    padding-left: 10px;
+    padding-top: 5px;
+  }
+
+  .paddingBodyInstruction {
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 0 20px;
+  }
+
+  .line {
+    width: 450px;
+    height: 1px;
+    margin-left: 0px;
+  }
+}

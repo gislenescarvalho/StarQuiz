@@ -1,7 +1,12 @@
 import React, { Component } from "react";
+import Modal from "react-modal";
+import { func, bool } from "prop-types";
+import close from "./close.svg";
 
-export default class ModalResult extends Component {
+class ModalResult extends Component {
   render() {
     return <div />;
   }
 }
+
+export default ModalResult;
