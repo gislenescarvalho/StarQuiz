@@ -1,10 +1,18 @@
-.showInstructions {
+.showInstructions,
+.showRanking {
   cursor: pointer;
   margin: 10px 0 -21px 10px;
 }
 
-.showInstructions:hover {
+.showInstructions:hover,
+.showRanking:hover {
   transform: scale(
     1.5
   ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.logoLink {
+  transform-origin: 0;
+  color: #000;
+  text-decoration: none;
 }

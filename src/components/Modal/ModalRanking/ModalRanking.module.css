@@ -5,6 +5,7 @@
 }
 
 .title {
+  font-family: Montserrat;
   display: flex;
   justify-content: center;
   font-size: 2rem;
@@ -18,4 +19,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.modalRanking {
+  min-width: 300px;
+  padding: 23px 50px !important;
+  position: absolute;
+  border-radius: 4px;
+}
+
+.closeModal {
+  position: absolute;
+  right: 12px;
+  top: 25px;
+  width: 40px;
+}
+
+@media screen and (max-width: 1023px) {
+  .closeModal {
+    top: 15px;
+  }
 }

@@ -9,7 +9,7 @@ const getGames = () => {
 const deleteGame = gameHash => {
   let games = getGames();
 
-  games = games.filter(game => game.hash != gameHash);
+  games = _.filter(games, game => game.hash != gameHash);
 
   localStorage.setItem(GAMESNAME, JSON.stringify(games));
 };
@@ -17,14 +17,13 @@ const deleteGame = gameHash => {
 const getFinishedGames = () => {
   let games = getGames();
 
-  return games.filter(game => game.isGameFinished && game.score != null);
+  return _.filter(games, game => game.isGameFinished && game.score != null);
 };
 
 const getGame = gameHash => {
   let games = getGames();
 
-  let game = games.find(g => g.hash == gameHash);
-
+  let game = _.find(games, game => game.hash === gameHash);
   return game;
 };
 
@@ -37,18 +36,22 @@ const getLastPendingGame = () => {
 const getPendingGames = () => {
   let games = getGames();
 
-  return games.filter(
+  return _.filter(
+    games,
     game => !game.isGameFinished && game.dateTimeStart && game.dateTimeLimit
   );
 };
 
 const setAnswer = (gameHash, answer) => {
   const games = getGames();
-  const gameIndex = games.findIndex(g => g.hash == gameHash);
+  const gameIndex = _.findIndex(games, game => game.hash === gameHash);
 
   const game = games[gameIndex];
 
-  const answerIndex = game.answers.findIndex(a => a.id == answer.id);
+  const answerIndex = _.findIndex(
+    game.answers,
+    gameAnswer => gameAnswer.id === answer.id
+  );
 
   if (answerIndex == -1) {
     game.answers.push(answer);
@@ -64,7 +67,7 @@ const setAnswer = (gameHash, answer) => {
 const setGameData = (gameHash, attribute, value) => {
   const games = getGames();
 
-  const gameIndex = games.findIndex(game => game.hash == gameHash);
+  const gameIndex = _.findIndex(games, game => game.hash === gameHash);
   const game = games[gameIndex];
 
   game[attribute] = value;
@@ -76,7 +79,10 @@ const setGameData = (gameHash, attribute, value) => {
 const setOrUpdateGame = game => {
   const games = getGames();
 
-  const localStorageGameIndex = games.findIndex(g => g.hash == game.hash);
+  const localStorageGameIndex = _.findIndex(
+    games,
+    game => game.hash === gameHash
+  );
 
   if (localStorageGameIndex > -1) {
     games[localStorageGameIndex] = game;

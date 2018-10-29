@@ -1,33 +1,37 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { string, number, arrayOf, shape, func, bool } from "prop-types";
+import _ from "lodash";
 
-const Container = Component =>
+const RankingContainer = Component =>
   class extends React.Component {
     static propTypes = {
-      data: PropTypes.arrayOf(
-        PropTypes.shape({
-          // Data to display at the ranking
-          email: PropTypes.string,
-          name: PropTypes.string,
-          score: PropTypes.number
+      data: arrayOf(
+        shape({
+          email: string,
+          name: string,
+          score: number
         })
-      ).isRequired
+      ).isRequired,
+      modalIsClosed: func.isRequired,
+      modalRankingIsOpen: bool.isRequired
     };
 
     constructor(props) {
       super(props);
 
       this.state = {};
+      const myArray = [
+        {
+          name: "Anakin Skywalker",
+          score: 100
+        },
+        {
+          name: "Luke Skywalker",
+          score: 200
+        }
+      ];
 
-      this.data = props.data.sort((a, b) => {
-        if (a.score > b.score) {
-          return -1;
-        }
-        if (a.score < b.score) {
-          return 1;
-        }
-        return 0;
-      });
+      this.data = _.orderBy(myArray, ["score"], ["desc"]);
     }
 
     render() {
@@ -35,4 +39,4 @@ const Container = Component =>
     }
   };
 
-export default Container;
+export default RankingContainer;

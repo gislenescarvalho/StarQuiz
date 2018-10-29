@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
+// import React from "react";
+import { number } from "prop-types";
 import moment from "moment";
 
-import Images from "../../images";
+import Images from "../../assets/images";
 
-import { LocalStorageHelpers } from "./Helpers";
-import { SWApi } from "./Services";
+import { LocalStorageHelpers } from "../../helpers";
+import { GameAPI } from "../../services";
 
-const Container = Component =>
+const QuizContainer = Component =>
   class extends React.Component {
     static propTypes = {
-      countdown: PropTypes.number, // Number in seconds of countdown before game begins
-      itensPerPage: PropTypes.number, // How many items to display on each page
-      pointsForFullAnswer: PropTypes.number, // Points for a correct answer without tips
-      timeLimit: PropTypes.number // Number in seconds of available time to answer the Quiz
+      countdown: number, // Number in seconds of countdown before game begins
+      itensPerPage: number, // How many items to display on each page
+      pointsForFullAnswer: number, // Points for a correct answer without tips
+      timeLimit: number // Number in seconds of available time to answer the Quiz
     };
 
     static defaultProps = {
@@ -27,8 +27,8 @@ const Container = Component =>
       super(props);
 
       this.state = {
-        activePage: 1, // Page active.
-        answers: [], // Answers given by the player.
+        activePage: 1,
+        answers: [],
         apiPeople: [], // All people from API.
         availableAPIPages: [], // Pages available on the API. Ex: [1, 2, 3, 4, 5, 6, 7, 8, 9].
         dateTimeEnded: "", // DateTime that the game was concluded.
@@ -43,19 +43,6 @@ const Container = Component =>
         play: false,
         score: null // Player final score.
       };
-
-      this.closeHintModal = this.closeHintModal.bind(this);
-      this.gameCounter = this.gameCounter.bind(this);
-      this.getItensFromPage = this.getItensFromPage.bind(this);
-      this.goToNextPage = this.goToNextPage.bind(this);
-      this.goToPreviousPage = this.goToPreviousPage.bind(this);
-      this.handleItemGuessInputChange = this.handleItemGuessInputChange.bind(
-        this
-      );
-      this.loadCharacterInfo = this.loadCharacterInfo.bind(this);
-      this.openHintModal = this.openHintModal.bind(this);
-      this.saveGameData = this.saveGameData.bind(this);
-      this.startGame = this.startGame.bind(this);
 
       this.interval = setInterval(this.gameCounter, 1000);
     }
@@ -83,7 +70,7 @@ const Container = Component =>
       );
     }
 
-    computeGameScore() {
+    computeGameScore = () => {
       const { answers, apiPeople } = this.state;
       const { pointsForFullAnswer } = this.props;
 
@@ -136,11 +123,11 @@ const Container = Component =>
       }
 
       return gameScore;
-    }
+    };
 
-    createPages(peoples, gameHash) {
+    createPages = (peoples, gameHash) => {
       const { itensPerPage } = this.props;
-      const { getAPIResource } = SWApi;
+      const { getResource } = GameAPI;
       const { getGame, setOrUpdateGame } = LocalStorageHelpers;
 
       peoples = peoples.sort((a, b) => 0.5 - Math.random());
@@ -216,9 +203,9 @@ const Container = Component =>
           }
         );
       }
-    }
+    };
 
-    closeHintModal(id) {
+    closeHintModal = id => {
       const { answers, hash } = this.state;
       const { setGameData } = LocalStorageHelpers;
 
@@ -236,9 +223,9 @@ const Container = Component =>
           setGameData(hash, "answers", answers);
         }
       );
-    }
+    };
 
-    createHash() {
+    createHash = () => {
       let text = "";
       let possible =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -249,9 +236,9 @@ const Container = Component =>
       }
 
       return text;
-    }
+    };
 
-    gameCounter() {
+    gameCounter = () => {
       const { hash, score } = this.state;
       const { setGameData } = LocalStorageHelpers;
 
@@ -275,22 +262,22 @@ const Container = Component =>
           }
         );
       }
-    }
+    };
 
-    getItensFromPage(page) {
+    getItensFromPage = page => {
       const { pages } = this.state;
 
       return pages[page];
-    }
+    };
 
-    getPages() {
+    getPages = () => {
       const pages = Object.keys(this.state.pages)
         .map(page => parseInt(page))
         .sort();
 
       return pages;
-    }
-    goToNextPage() {
+    };
+    goToNextPage = () => {
       const { activePage } = this.state;
 
       if (this.hasNextPage()) {
@@ -303,9 +290,9 @@ const Container = Component =>
           }
         );
       }
-    }
+    };
 
-    goToPreviousPage() {
+    goToPreviousPage = () => {
       const { activePage } = this.state;
 
       if (this.hasPreviousPage()) {
@@ -318,9 +305,9 @@ const Container = Component =>
           }
         );
       }
-    }
+    };
 
-    handleItemGuessInputChange(event, id) {
+    handleItemGuessInputChange = (event, id) => {
       const { answers, hash } = this.state;
       const { setGameData } = LocalStorageHelpers;
 
@@ -349,9 +336,9 @@ const Container = Component =>
           setGameData(hash, "answers", this.state.answers);
         }
       );
-    }
+    };
 
-    hasNextPage() {
+    hasNextPage = () => {
       const { activePage } = this.state;
 
       const pages = this.getPages();
@@ -360,9 +347,9 @@ const Container = Component =>
       const remainingPages = pages.splice(index + 1, pages.length);
 
       return remainingPages.length > 0;
-    }
+    };
 
-    hasPreviousPage() {
+    hasPreviousPage = () => {
       const { activePage } = this.state;
 
       const pages = this.getPages();
@@ -371,19 +358,19 @@ const Container = Component =>
       const remainingPages = pages.splice(index, pages.length);
 
       return pages.length > 0;
-    }
+    };
 
-    isExpired() {
+    isExpired = () => {
       const { dateTimeLimit } = this.state;
 
       const secondsRemaining = moment().diff(dateTimeLimit, "seconds") * -1;
 
       return secondsRemaining < 1;
-    }
+    };
 
-    loadCharacterInfo(characterId) {
+    loadDetailsCharacter = characterId => {
       const { activePage, pages } = this.state;
-      const { getAPIResource } = SWApi;
+      const { getResource } = GameAPI;
 
       let page = pages[activePage];
 
@@ -399,7 +386,7 @@ const Container = Component =>
       if (!character.isHomeworldLoaded) {
         character.homeworld = {};
 
-        getAPIResource(homeworld)
+        getResource(homeworld)
           .then(response => {
             character.homeworld = response.data;
             character.isHomeworldLoaded = true;
@@ -421,7 +408,7 @@ const Container = Component =>
         character.films = [];
 
         films.forEach((filmUrl, indexFilms) => {
-          getAPIResource(filmUrl)
+          getResource(filmUrl)
             .then(response => {
               character.films.push(response.data);
 
@@ -446,7 +433,7 @@ const Container = Component =>
         character.species = [];
 
         species.forEach((speciesUrl, indexSpecies) => {
-          getAPIResource(speciesUrl)
+          getResource(speciesUrl)
             .then(response => {
               character.species.push(response.data);
 
@@ -471,7 +458,7 @@ const Container = Component =>
         character.starships = [];
 
         starships.forEach((starshipsUrl, indexStarships) => {
-          getAPIResource(starshipsUrl)
+          getResource(starshipsUrl)
             .then(response => {
               character.starships.push(response.data);
 
@@ -496,7 +483,7 @@ const Container = Component =>
         character.vehicles = [];
 
         vehicles.forEach((vehiclesUrl, indexVehicles) => {
-          getAPIResource(vehiclesUrl)
+          getResource(vehiclesUrl)
             .then(response => {
               character.vehicles.push(response.data);
 
@@ -516,20 +503,18 @@ const Container = Component =>
             });
         });
       }
-    }
+    };
 
-    loadInitialGameData() {
+    loadInitialGameData = () => {
       const { hash } = this.state;
-      const { getAPIResource } = SWApi;
+      const { getResource } = GameAPI;
       const { getGame } = LocalStorageHelpers;
 
       let game = getGame(hash);
 
       const loadGame = () => {
         const loadPeoplesPage = url => {
-          let currentPage = 1;
-
-          getAPIResource(url)
+          getResource(url)
             .then(response => {
               const { data } = response;
               const { next, results } = data;
@@ -577,11 +562,11 @@ const Container = Component =>
       } else {
         loadGame();
       }
-    }
+    };
 
-    loadPageInfo(pageNumber) {
+    loadPageInfo = pageNumber => {
       const { pages } = this.state;
-      const { getAPIResource } = SWApi;
+      const { getResource } = GameAPI;
 
       const getRandomInt = (min, max) => {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -623,13 +608,13 @@ const Container = Component =>
       ) {
         this.loadPageInfo(this.state.activePage - 1);
       }
-    }
+    };
 
-    openHintModal(id) {
+    openHintModal = id => {
       const { answers, hash } = this.state;
       const { setGameData } = LocalStorageHelpers;
 
-      this.loadCharacterInfo(id);
+      this.loadDetailsCharacter(id);
 
       const answerIndex = answers.findIndex(a => a.url == id);
       let answer;
@@ -658,9 +643,9 @@ const Container = Component =>
           setGameData(hash, "answers", answers);
         }
       );
-    }
+    };
 
-    saveGameData(data) {
+    saveGameData = data => {
       const { hash } = this.state;
       const { setGameData } = LocalStorageHelpers;
 
@@ -679,9 +664,9 @@ const Container = Component =>
       this.setState({
         isGameFinished: true
       });
-    }
+    };
 
-    startGame() {
+    startGame = () => {
       const { dateTimeStart, hash, play } = this.state;
       const { timeLimit } = this.props;
       const { setGameData } = LocalStorageHelpers;
@@ -708,7 +693,7 @@ const Container = Component =>
           }
         );
       }
-    }
+    };
 
     render() {
       return (
@@ -723,7 +708,7 @@ const Container = Component =>
           hasPrevious={this.hasPreviousPage()}
           isExpired={this.isExpired()}
           itens={this.getItensFromPage(this.state.activePage)}
-          loadCharacterInfo={this.loadCharacterInfo}
+          loadDetailsCharacter={this.loadDetailsCharacter}
           openHintModal={this.openHintModal}
           saveGameData={this.saveGameData}
           startGame={this.startGame}
@@ -732,4 +717,4 @@ const Container = Component =>
     }
   };
 
-export default Container;
+export default QuizContainer;

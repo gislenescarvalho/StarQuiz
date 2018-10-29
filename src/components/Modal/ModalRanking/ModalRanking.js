@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
-import { func, bool, string, shape, arrayOf } from "prop-types";
+import { func, bool, string, shape, arrayOf, number } from "prop-types";
 import close from "../close.svg";
 import RankingContainer from "./RankingContainer";
+import styles from "./ModalRanking.module.css";
 
 const customStyles = {
   content: {
@@ -19,38 +20,42 @@ const customStyles = {
 };
 
 const ModalRanking = props => {
-  const { games } = props;
-
-  const gamesDefault = {
-    name: "Chewie",
-    email: "chewie@chewie.com",
-    score: 3000
-  };
+  const { games, modalRankingIsOpen, modalIsClosed } = props;
 
   return (
-    <div className={styles.rankingWrapper}>
-      <div className={styles.title}>Ranking</div>
-
-      <div className={styles.content}>
-        {gamesDefault.length
-          ? gamesDefault.map((game, i) => (
-              <div key={`${game}-${i}`} className={styles.item}>
-                <div className={styles.position}>
-                  {i + 1} - {game.name}
-                </div>
-                <div>Pontuação: {game.score}</div>
-              </div>
-            ))
-          : "huurh uughghhhgh"}
+    <Modal
+      isOpen={modalRankingIsOpen}
+      onRequestClose={modalIsClosed}
+      style={customStyles}
+      className={styles.modalRanking}
+      ariaHideApp={false}
+    >
+      <div className={styles.closeModal}>
+        <img src={close} alt="Fechar" onClick={modalIsClosed} />
       </div>
-    </div>
+      <div className={styles.rankingWrapper}>
+        <div className={styles.title}>Ranking</div>
+
+        <div className={styles.content}>
+          {games.length
+            ? games.map((game, i) => (
+                <div key={`${game}-${i}`} className={styles.item}>
+                  <div className={styles.position}>
+                    {i + 1} - {game.name}
+                  </div>
+                  <div>Pontuação: {game.score}</div>
+                </div>
+              ))
+            : "huurh uughghhhgh"}
+        </div>
+      </div>
+    </Modal>
   );
 };
 
 ModalRanking.propTypes = {
   games: arrayOf(
     shape({
-      // Data to display at the ranking
       email: string,
       name: string,
       score: number

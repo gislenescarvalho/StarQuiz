@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { object } from "prop-types";
+
 import Icon from "../Icons";
-import styles from "./Logo.module.css";
 
 class Logo extends Component {
   state = {
@@ -25,7 +25,7 @@ class Logo extends Component {
   render() {
     return (
       <Fragment>
-        <Icon name="DarthVaderBlack" className={styles.logo} />
+        <Icon name="DarthVaderBlack" />
       </Fragment>
     );
   }

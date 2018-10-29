@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import styles from "./ModalInstructions.module.css";
 import Modal from "react-modal";
 import { func, bool } from "prop-types";
@@ -27,7 +27,7 @@ class ModalInstructions extends Component {
       instructionIsAccepted
     } = this.props;
     return (
-      <div>
+      <Fragment>
         <Modal
           isOpen={modalInstructionsIsOpen}
           onRequestClose={closeModal}
@@ -94,7 +94,7 @@ class ModalInstructions extends Component {
             </div>
           </div>
         </Modal>
-      </div>
+      </Fragment>
     );
   }
 }

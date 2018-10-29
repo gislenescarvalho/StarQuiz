@@ -1,1 +1,1 @@
-export { default as LocalStorageHelper } from "./LocalStorage";
+export { default as LocalStorageHelpers } from "./LocalStorage";
