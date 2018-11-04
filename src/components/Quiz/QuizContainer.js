@@ -355,7 +355,7 @@ const QuizContainer = Component =>
       const pages = this.getPages();
       const index = pages.findIndex(p => p == activePage);
 
-      const remainingPages = pages.splice(index, pages.length);
+      pages.splice(index, pages.length);
 
       return pages.length > 0;
     };

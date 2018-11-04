@@ -7,7 +7,7 @@ const getGames = () => {
 };
 
 const deleteGame = gameHash => {
-  let games = getGames();
+  const games = getGames();
 
   games = _.filter(games, game => game.hash != gameHash);
 
@@ -15,15 +15,15 @@ const deleteGame = gameHash => {
 };
 
 const getFinishedGames = () => {
-  let games = getGames();
+  const games = getGames();
 
   return _.filter(games, game => game.isGameFinished && game.score != null);
 };
 
 const getGame = gameHash => {
-  let games = getGames();
+  const games = getGames();
 
-  let game = _.find(games, game => game.hash === gameHash);
+  const game = _.find(games, game => game.hash === gameHash);
   return game;
 };
 
@@ -34,7 +34,7 @@ const getLastPendingGame = () => {
 };
 
 const getPendingGames = () => {
-  let games = getGames();
+  const games = getGames();
 
   return _.filter(
     games,
@@ -53,7 +53,7 @@ const setAnswer = (gameHash, answer) => {
     gameAnswer => gameAnswer.id === answer.id
   );
 
-  if (answerIndex == -1) {
+  if (!answerIndex) {
     game.answers.push(answer);
   } else {
     game.answers[answerIndex] = answer;
@@ -84,7 +84,7 @@ const setOrUpdateGame = game => {
     game => game.hash === gameHash
   );
 
-  if (localStorageGameIndex > -1) {
+  if (localStorageGameIndex) {
     games[localStorageGameIndex] = game;
   } else {
     games.push(game);

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "https://swapi.co/api/people/";
+const URL = process.env.BASE_URL;
 
 const getResource = url =>
   axios({
