@@ -17,6 +17,7 @@ const Pagination = props => {
           width={25}
           height={25}
           onClick={goToPreviousPage}
+          className="pointer"
         />
       )}
       {hasNext && (
@@ -25,6 +26,7 @@ const Pagination = props => {
           width={25}
           height={25}
           onClick={goToNextPage}
+          className="pointer"
         />
       )}
     </div>
