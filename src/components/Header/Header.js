@@ -1,13 +1,21 @@
 import React, { Component } from "react";
-import { object, string, number } from "prop-types";
+import {
+  oneOfType,
+  instanceOf,
+  Date,
+  object,
+  string,
+  bool,
+  number
+} from "prop-types";
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import Title from "../Title";
 import CountDown from "../CountDown/CountDown";
 import Icon from "../Icons";
-import ModalInstructions from "../Modal/ModalInstructions/ModalInstructions";
-import ModalRanking from "../Modal/ModalRanking/ModalRanking";
+import { ModalInstructions } from "../Modal";
+import { ModalRanking } from "../Modal";
 
 class Header extends Component {
   state = {
@@ -25,7 +33,14 @@ class Header extends Component {
     this.setState({ modalInstructionsIsOpen: false });
 
   render() {
-    const { sizeLogo, title, time } = this.props;
+    const {
+      sizeLogo,
+      title,
+      dateTimeLimit,
+      isStarted,
+      isVisible,
+      timePlaceholder
+    } = this.props;
     const { modalInstructionsIsOpen, modalRankingIsOpen } = this.state;
 
     return (
@@ -56,7 +71,12 @@ class Header extends Component {
           </div>
         </div>
         <div className="Grid-cell u-sm-size5of12 u-md-size4of12 u-lg-size4of12 u-flex u-flexJustifyEnd">
-          <CountDown time={time} />
+          <CountDown
+            dateTimeLimit={dateTimeLimit}
+            isStarted={isStarted}
+            isVisible={isVisible}
+            timePlaceholder={timePlaceholder}
+          />
         </div>
         <ModalInstructions
           modalInstructionsIsOpen={modalInstructionsIsOpen}
@@ -75,13 +95,16 @@ class Header extends Component {
 Header.propTypes = {
   sizeLogo: object,
   title: string,
-  time: number
+  dateTimeLimit: oneOfType([instanceOf(Date), string]).isRequired, // DateTime limit to finish game
+  isStarted: bool.isRequired, // Timer is started
+  isVisible: bool, // Timer is visible
+  timePlaceholder: number.isRequired
 };
 
 Header.defaultProps = {
   sizeLogo: {},
   title: "",
-  time: 0
+  dateTimeLimit: 0
 };
 
 export default Header;

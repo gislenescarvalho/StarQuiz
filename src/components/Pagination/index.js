@@ -4,7 +4,7 @@ import { func, bool } from "prop-types";
 import Icon from "../Icons";
 
 import Container from "./Container";
-import styles from "./styles.scss";
+import styles from "./Pagination.module.css";
 
 const Pagination = props => {
   const { goToNextPage, goToPreviousPage, hasNext, hasPrevious } = props;
@@ -12,14 +12,20 @@ const Pagination = props => {
   return (
     <div className={styles.pagination}>
       {hasPrevious && (
-        <button className={styles.buttonPagination} onClick={goToPreviousPage}>
-          <Icon name="ChevronLeft" width={32} height={32} /> Anterior
-        </button>
+        <Icon
+          name="ChevronLeft"
+          width={25}
+          height={25}
+          onClick={goToPreviousPage}
+        />
       )}
       {hasNext && (
-        <button className={styles.buttonPagination} onClick={goToNextPage}>
-          Próximo <Icon name="ChevronRight" width={32} height={32} />
-        </button>
+        <Icon
+          name="ChevronRight"
+          width={25}
+          height={25}
+          onClick={goToNextPage}
+        />
       )}
     </div>
   );

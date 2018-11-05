@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Modal from "react-modal";
 import { string, bool, oneOfType, arrayOf, shape, func } from "prop-types";
 import close from "../close.svg";
@@ -11,8 +11,10 @@ const customStyles = {
     background: "#fff",
     top: "50%",
     left: "50%",
-    transform: "translate(-50%, -50%)",
-    textAlign: "left"
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)"
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, .6)"
@@ -40,6 +42,10 @@ const ModalDetails = props => {
 
   //"http://tachyons.io/img/cat-720.jpg"
 
+  const speciesDefault = [{ name: "human" }, { name: "not human" }];
+  const filmsDefault = [{ title: "VII" }, { title: "IX" }];
+  const vehiclesDefault = [{ name: "Unknow" }];
+
   return (
     <Modal
       isOpen={modalDetailsIsOpen}
@@ -51,38 +57,49 @@ const ModalDetails = props => {
       <div className={styles.closeModal}>
         <img src={close} alt="Fechar" onClick={modalIsClosed} />
       </div>
-      <div class="bg-white br3 center mw5 ba b--black-10 mv4">
-        <title>Detalhes</title>
-        <div className={styles.detailsWrapper}>
-          <div className="w-100 db" style={imageStyles} />
+      <div className={styles.detailsContent}>
+        <div class="center pa10 mv4">
+          <title>Detalhes</title>
+          <img
+            src="http://tachyons.io/img/cat-720.jpg"
+            class="w-60 mb10"
+            style={imageStyles}
+            alt="Cat"
+          />
           <div class="pa3">
             <small class="gray db pv2">
               Espécie -{" "}
               <b>
-                {species.length
-                  ? species.map(
+                {speciesDefault.length
+                  ? speciesDefault.map(
                       (specie, i) =>
-                        `${specie.name}${i + 1 < species.length ? ", " : "."}`
+                        `${specie.name}${
+                          i + 1 < speciesDefault.length ? ", " : "."
+                        }`
                     )
                   : "-"}
               </b>
             </small>
             <small class="gray db pv2">
-              Altura - <b>{height}</b>
+              Altura - <b>{height && height.length ? height : "-"}</b>
             </small>
             <small class="gray db pv2">
-              Cor do cabelo - <b>{hair_color.length ? hair_color : "-"}</b>
+              Cor do cabelo -{" "}
+              <b>{hair_color && hair_color.length ? hair_color : "-"}</b>
             </small>
             <small class="gray db pv2">
-              Planeta - <b>{homeworld.length ? homeworld.name : "-"}</b>
+              Planeta -{" "}
+              <b>{homeworld && homeworld.length ? homeworld.name : "-"}</b>
             </small>
             <small class="gray db pv2">
               Filmes -{" "}
               <i>
-                {films.length
-                  ? films.map(
+                {filmsDefault.length
+                  ? filmsDefault.map(
                       (film, i) =>
-                        `${film.title}${i + 1 < films.length ? ", " : "."}`
+                        `${film.title}${
+                          i + 1 < filmsDefault.length ? ", " : "."
+                        }`
                     )
                   : "-"}
               </i>
@@ -90,10 +107,12 @@ const ModalDetails = props => {
             <small class="gray db pv2">
               Veículos -{" "}
               <i>
-                {vehicles.length
-                  ? vehicles.map(
+                {vehiclesDefault.length
+                  ? vehiclesDefault.map(
                       (vehicle, i) =>
-                        `${vehicle.name}${i + 1 < vehicles.length ? ", " : "."}`
+                        `${vehicle.name}${
+                          i + 1 < vehiclesDefault.length ? ", " : "."
+                        }`
                     )
                   : "-"}
               </i>

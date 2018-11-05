@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Route, Switch } from "react-router";
 
 import Home from "../../pages/Home/Home";
-import Game from "../../pages/Game/Game";
+import Quiz from "../../components/Quiz";
 
 class App extends Component {
   render() {
@@ -10,7 +10,8 @@ class App extends Component {
       <Fragment>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/game" component={Game} />
+          <Route exact path="/game" component={Quiz} />
+          <Route exact path="/game/:hash" component={Quiz} />
         </Switch>
       </Fragment>
     );

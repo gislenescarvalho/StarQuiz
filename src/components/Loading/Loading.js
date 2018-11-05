@@ -1,6 +1,6 @@
 import React from "react";
 import Icon from "../Icons";
-import styles from "./styles.css";
+import styles from "./Loading.module.css";
 import ReactModal from "react-modal";
 
 const Loading = props => (

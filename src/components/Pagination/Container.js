@@ -1,17 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
 import { func, bool } from "prop-types";
 
-class Container extends Component {
-  render() {
-    return <Component {...this.props} {...this.state} />;
-  }
-}
+const Container = Component =>
+  class extends React.Component {
+    static propTypes = {
+      goToNextPage: func.isRequired, // Function to go to next page
+      goToPreviousPage: func.isRequired, // Function to go to previous page
+      hasNext: bool.isRequired, // Has next page
+      hasPrevious: bool.isRequired // Has previous page
+    };
 
-Container.propTypes = {
-  goToNextPage: func.isRequired, // go to next page
-  goToPreviousPage: func.isRequired, // go to previous page
-  hasNext: bool.isRequired, // Has next page
-  hasPrevious: bool.isRequired // Has previous page
-};
+    constructor(props) {
+      super(props);
+
+      this.state = {};
+    }
+
+    render() {
+      return <Component {...this.props} {...this.state} />;
+    }
+  };
 
 export default Container;

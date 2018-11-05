@@ -1,28 +1,29 @@
-h2 {
+title,
+label,
+button {
   font-family: Montserrat;
-  font-size: 20px;
+  text-align: left;
 }
 
 .modalInput {
-  width: 300px;
+  width: 250px;
   height: 200px;
-  padding: 23px 50px !important;
+  padding: 15px 15px !important;
   position: absolute;
   border-radius: 4px;
 }
 
 .closeModal {
   position: absolute;
-  right: 12px;
-  top: 25px;
-  width: 40px;
+  right: 15px;
+  top: 15px;
+  width: 25px;
 }
 
 /* form */
 label {
   width: 96%;
   float: left;
-  text-align: left;
 }
 
 input {

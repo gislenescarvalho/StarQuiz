@@ -1,20 +1,27 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
+import {
+  arrayOf,
+  oneOfType,
+  instanceOf,
+  shape,
+  Date,
+  func,
+  object,
+  bool,
+  string,
+  number
+} from "prop-types";
 
-import Dialog from "@material-ui/core/Dialog";
-
-import GameLoading from "../GameLoading";
-import GameResult from "../GameResult";
-import Logo from "../Logo";
+import Header from "../Header/Header";
+import Card from "../Cards/Cards";
+import { ModalDetails, ModalInput, ModalResult } from "../Modal";
+import QuizLoading from "../QuizLoading/QuizLoading";
 import Pagination from "../Pagination";
-import QuizItem from "../QuizItem";
-import Timer from "../Timer";
+import QuizContainer from "./QuizContainer";
+import styles from "./Quiz.module.css";
 
-import Container from "./Container";
-import styles from "./styles.scss";
-
-const SWQuiz = props => {
+const Quiz = props => {
   const {
     answers,
     closeHintModal,
@@ -44,16 +51,19 @@ const SWQuiz = props => {
   const array = Array(itensPerPage).fill(0);
 
   return (
-    <div className={styles.swquizWrapper}>
-      <div className={styles.top}>
-        <Logo type="horizontal" size={100} />
-        <Timer
-          dateTimeLimit={dateTimeLimit}
-          isStarted={!!dateTimeStart}
-          isVisible={!isGameFinished}
-          timePlaceholder={props.timeLimit}
-        />
-      </div>
+    <div className={`${styles.container} Grid-cell`}>
+      <Header
+        sizeLogo={{
+          lg: 70,
+          md: 50,
+          sm: 40
+        }}
+        title={"StarQuiz!"}
+        dateTimeLimit={dateTimeLimit}
+        isStarted={!!dateTimeStart}
+        isVisible={!isGameFinished}
+        timePlaceholder={props.timeLimit}
+      />
 
       <div className={styles.items}>
         {itens
@@ -64,7 +74,7 @@ const SWQuiz = props => {
               const openedModal = answer ? answer.openedModal : false;
 
               return (
-                <QuizItem
+                <Card
                   {...item}
                   closeHintModal={closeHintModal}
                   handleInputChange={handleItemGuessInputChange}
@@ -80,7 +90,7 @@ const SWQuiz = props => {
                 />
               );
             })
-          : array.map((number, i) => <QuizItem key={i} isPlaceholder={true} />)}
+          : array.map((number, i) => <Card key={i} isPlaceholder={true} />)}
       </div>
 
       {!isGameFinished && (
@@ -91,66 +101,61 @@ const SWQuiz = props => {
           hasPrevious={hasPrevious}
         />
       )}
+      <QuizLoading isReadyToStart={isGameReady} startGame={startGame} />
 
-      <Dialog open={!play} aria-labelledby="simple-dialog-title">
-        <GameLoading isReadyToStart={isGameReady} startGame={startGame} />
-      </Dialog>
-
-      <Dialog open={isExpired} aria-labelledby="simple-dialog-title">
-        <GameResult
-          hasResult={isGameFinished && score != null}
-          loading={score == null}
-          playerEmail={email}
-          playerName={name}
-          saveGameData={saveGameData}
-          score={score}
-        />
-      </Dialog>
+      <ModalResult
+        hasResult={isGameFinished && score != null}
+        loading={score == null}
+        playerEmail={email}
+        playerName={name}
+        saveGameData={saveGameData}
+        score={score}
+      />
     </div>
   );
 };
 
-SWQuiz.propTypes = {
-  answers: PropTypes.arrayOf(
-    PropTypes.shape({
-      text: PropTypes.string, // Player answer
-      url: PropTypes.string // Url of the actual char
+Quiz.propTypes = {
+  answers: arrayOf(
+    shape({
+      text: string, // Player answer
+      url: string // Url of the actual char
     })
   ), //
-  closeHintModal: PropTypes.func, // Function to close hint modal
-  dateTimeEnded: PropTypes.oneOfType([
+  closeHintModal: func, // Function to close hint modal
+  dateTimeEnded: oneOfType([
     // DateTime that the game was ended
-    PropTypes.string,
-    PropTypes.instanceOf(Date)
+    string,
+    instanceOf(Date)
   ]),
-  dateTimeLimit: PropTypes.oneOfType([
+  dateTimeLimit: oneOfType([
     // DateTime limit to finish the game
-    PropTypes.string,
-    PropTypes.instanceOf(Date)
+    string,
+    instanceOf(Date)
   ]),
-  dateTimeStart: PropTypes.oneOfType([
+  dateTimeStart: oneOfType([
     // DateTime that the game was started
-    PropTypes.string,
-    PropTypes.instanceOf(Date)
+    string,
+    instanceOf(Date)
   ]),
-  email: PropTypes.string, // Email of the player
-  goToNextPage: PropTypes.func, // Function to go to next page
-  goToPreviousPage: PropTypes.func, // Function to go to previous page
-  handleItemGuessInputChange: PropTypes.func, // Function to change input text of player guess
-  hasNext: PropTypes.bool, // Has next page
-  hasPrevious: PropTypes.bool, // Has previous page
-  isExpired: PropTypes.bool, // Is game expired
-  isGameFinished: PropTypes.bool, // Is game finished
-  isGameReady: PropTypes.bool, // Is game ready to start
-  itens: PropTypes.arrayOf(PropTypes.object), // Char itens to display
-  itensPerPage: PropTypes.number, // Maximum itens on each page. Used to display placeholders.
-  loadCharacterInfo: PropTypes.func, // Function to load character info
-  name: PropTypes.string, // Player name
-  openHintModal: PropTypes.func, // Function to open modal
-  play: PropTypes.bool, // Is game playing
-  saveGameData: PropTypes.func, // Function to save game data
-  score: PropTypes.number, // Player score
-  startGame: PropTypes.func // Function to start a game
+  email: string, // Email of the player
+  goToNextPage: func, // Function to go to next page
+  goToPreviousPage: func, // Function to go to previous page
+  handleItemGuessInputChange: func, // Function to change input text of player guess
+  hasNext: bool, // Has next page
+  hasPrevious: bool, // Has previous page
+  isExpired: bool, // Is game expired
+  isGameFinished: bool, // Is game finished
+  isGameReady: bool, // Is game ready to start
+  itens: arrayOf(object), // Char itens to display
+  itensPerPage: number, // Maximum itens on each page. Used to display placeholders.
+  loadCharacterInfo: func, // Function to load character info
+  name: string, // Player name
+  openHintModal: func, // Function to open modal
+  play: bool, // Is game playing
+  saveGameData: func, // Function to save game data
+  score: number, // Player score
+  startGame: func // Function to start a game
 };
 
-export default withRouter(Container(SWQuiz));
+export default withRouter(QuizContainer(Quiz));

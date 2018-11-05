@@ -1,11 +1,9 @@
-// import React from "react";
-import { number } from "prop-types";
+import React from "react";
 import moment from "moment";
-
+import { number } from "prop-types";
 import Images from "../../assets/images";
-
 import { LocalStorageHelpers } from "../../helpers";
-import { GameAPI } from "../../services";
+import { GameAPI } from "../../services/api";
 
 const QuizContainer = Component =>
   class extends React.Component {
@@ -63,7 +61,7 @@ const QuizContainer = Component =>
           hash
         },
         () => {
-          this.props.history.push(`/swquiz/${hash}`);
+          this.props.history.push(`/game/${hash}`);
 
           this.loadInitialGameData();
         }
@@ -80,7 +78,7 @@ const QuizContainer = Component =>
         value1 = value1.toLowerCase().replace(/\s/g, "");
         value2 = value2.toLowerCase().replace(/\s/g, "");
 
-        if (value1 == value2) {
+        if (value1 === value2) {
           matchScore = 100;
         }
 
@@ -101,13 +99,13 @@ const QuizContainer = Component =>
 
       let gameScore = 0;
 
-      if (apiPeople.length == 0) {
+      if (apiPeople.length === 0) {
         this.loadInitialGameData();
       }
 
       if (answers) {
         answers.forEach(answer => {
-          const expected = apiPeople.find(people => people.url == answer.url)
+          const expected = apiPeople.find(people => people.url === answer.url)
             .name;
           const actual = answer.text;
 
@@ -139,7 +137,7 @@ const QuizContainer = Component =>
         if (!this.isExpired()) {
           Object.keys(game.pages).forEach(pageNumber => {
             const page = game.pages[pageNumber].map(({ url }) =>
-              peoples.find(people => people.url == url)
+              peoples.find(people => people.url === url)
             );
 
             pages[pageNumber] = page;
@@ -177,7 +175,7 @@ const QuizContainer = Component =>
             pages[actualPage] = [];
           }
 
-          if (pages[actualPage].length == itensPerPage) {
+          if (pages[actualPage].length === itensPerPage) {
             actualPage++;
 
             pages[actualPage] = [];
@@ -209,7 +207,7 @@ const QuizContainer = Component =>
       const { answers, hash } = this.state;
       const { setGameData } = LocalStorageHelpers;
 
-      const answerIndex = answers.findIndex(a => a.url == id);
+      const answerIndex = answers.findIndex(a => a.url === id);
       const answer = answers[answerIndex];
 
       answer.openedModal = false;
@@ -247,7 +245,7 @@ const QuizContainer = Component =>
 
         let calculateScore = score;
 
-        if (score == null) {
+        if (score === null) {
           calculateScore = this.computeGameScore();
         }
 
@@ -311,7 +309,7 @@ const QuizContainer = Component =>
       const { answers, hash } = this.state;
       const { setGameData } = LocalStorageHelpers;
 
-      const answerIndex = answers.findIndex(a => a.url == id);
+      const answerIndex = answers.findIndex(a => a.url === id);
       let answer;
 
       if (answerIndex > -1) {
@@ -342,7 +340,7 @@ const QuizContainer = Component =>
       const { activePage } = this.state;
 
       const pages = this.getPages();
-      const index = pages.findIndex(p => p == activePage);
+      const index = pages.findIndex(p => p === activePage);
 
       const remainingPages = pages.splice(index + 1, pages.length);
 
@@ -353,7 +351,7 @@ const QuizContainer = Component =>
       const { activePage } = this.state;
 
       const pages = this.getPages();
-      const index = pages.findIndex(p => p == activePage);
+      const index = pages.findIndex(p => p === activePage);
 
       pages.splice(index, pages.length);
 
@@ -374,7 +372,7 @@ const QuizContainer = Component =>
 
       let page = pages[activePage];
 
-      let characterIndex = page.findIndex(c => c.url == characterId);
+      let characterIndex = page.findIndex(c => c.url === characterId);
       let character = page[characterIndex];
 
       let films = character.films;
@@ -412,7 +410,7 @@ const QuizContainer = Component =>
             .then(response => {
               character.films.push(response.data);
 
-              if (indexFilms + 1 == films.length) {
+              if (indexFilms + 1 === films.length) {
                 character.isFilmsLoaded = true;
                 page = pages[activePage];
                 page[characterIndex] = character;
@@ -437,7 +435,7 @@ const QuizContainer = Component =>
             .then(response => {
               character.species.push(response.data);
 
-              if (indexSpecies + 1 == species.length) {
+              if (indexSpecies + 1 === species.length) {
                 character.isSpeciesLoaded = true;
                 page = pages[activePage];
                 page[characterIndex] = character;
@@ -462,7 +460,7 @@ const QuizContainer = Component =>
             .then(response => {
               character.starships.push(response.data);
 
-              if (indexStarships + 1 == starships.length) {
+              if (indexStarships + 1 === starships.length) {
                 character.isStarshipsLoaded = true;
                 page = pages[activePage];
                 page[characterIndex] = character;
@@ -487,7 +485,7 @@ const QuizContainer = Component =>
             .then(response => {
               character.vehicles.push(response.data);
 
-              if (indexVehicles + 1 == vehicles.length) {
+              if (indexVehicles + 1 === vehicles.length) {
                 character.isVehiclesLoaded = true;
                 page = pages[activePage];
                 page[characterIndex] = character;
@@ -566,7 +564,6 @@ const QuizContainer = Component =>
 
     loadPageInfo = pageNumber => {
       const { pages } = this.state;
-      const { getResource } = GameAPI;
 
       const getRandomInt = (min, max) => {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -574,8 +571,6 @@ const QuizContainer = Component =>
 
       if (pages[pageNumber]) {
         pages[pageNumber].forEach((character, indexCharacter) => {
-          let isCharacterImageLoaded = false;
-
           if (!character.imageUrl) {
             const url = character.url;
             const split = url.split("/");
@@ -588,7 +583,7 @@ const QuizContainer = Component =>
 
             pages[pageNumber][indexCharacter] = character;
 
-            if (indexCharacter + 1 == pages[pageNumber].length) {
+            if (indexCharacter + 1 === pages[pageNumber].length) {
               this.setState({
                 isGameReady: true,
                 pages
@@ -598,13 +593,13 @@ const QuizContainer = Component =>
         });
       }
 
-      if (this.hasNextPage() && this.state.activePage + 1 == pageNumber + 1) {
+      if (this.hasNextPage() && this.state.activePage + 1 === pageNumber + 1) {
         this.loadPageInfo(this.state.activePage + 1);
       }
 
       if (
         this.hasPreviousPage() &&
-        this.state.activePage - 1 == pageNumber - 1
+        this.state.activePage - 1 === pageNumber - 1
       ) {
         this.loadPageInfo(this.state.activePage - 1);
       }
@@ -616,7 +611,7 @@ const QuizContainer = Component =>
 
       this.loadDetailsCharacter(id);
 
-      const answerIndex = answers.findIndex(a => a.url == id);
+      const answerIndex = answers.findIndex(a => a.url === id);
       let answer;
 
       if (answerIndex > -1) {

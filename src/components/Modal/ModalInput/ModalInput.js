@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
-import { func, bool } from "prop-types";
-import close from "./close.svg";
+import { func, bool, string } from "prop-types";
+import close from "../close.svg";
+import styles from "./ModalInput.module.css";
 
 const customStyles = {
   content: {
@@ -19,10 +20,11 @@ const customStyles = {
 
 class ModalInput extends Component {
   render() {
+    const { modalInputIsOpen, modalIsClosed, onSubmit, data } = this.props;
     return (
       <Modal
         isOpen={modalInputIsOpen}
-        onRequestClose={closeModal}
+        onRequestClose={modalIsClosed}
         style={customStyles}
         className={styles.modalInput}
         ariaHideApp={false}
@@ -30,19 +32,20 @@ class ModalInput extends Component {
         <div className={styles.closeModal}>
           <img src={close} alt="Fechar" onClick={modalIsClosed} />
         </div>
-        <h2>Escreva o nome do personagem:</h2>
-        <form onSubmit={onSubmit}>
-          <label>Nome:</label>
-          <input type="text" name="characterName" />
-          <div class="flex items-center justify-center pa4">
+        <title class="mt30">Escreva o nome do personagem:</title>
+        <div class="flex items-center justify-center pa4 ">
+          <form onSubmit={onSubmit}>
+            <label>Nome:</label>
+            <input type="text" name={data.name} id={data.name} />
+
             <button
               type="submit"
-              class="f5 no-underline dark-blue bg-animate hover-bg-white hover-white inline-flex items-center pa3 ba br2 border-box mr4 pointer"
+              class="f5 dark-green bg-animate hover-bg-yellow hover-black inline-flex items-center pa3 ba br2 border-box mr4 pointer"
             >
               ENVIAR
             </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </Modal>
     );
   }
@@ -51,7 +54,8 @@ class ModalInput extends Component {
 ModalInput.propTypes = {
   modalIsClosed: func.isRequired,
   modalInputIsOpen: bool.isRequired,
-  onSubmit: func.isRequired
+  onSubmit: func.isRequired,
+  data: string.isRequired
 };
 
 export default ModalInput;

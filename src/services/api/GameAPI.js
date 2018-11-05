@@ -1,17 +1,15 @@
 import axios from "axios";
 
-const URL = process.env.BASE_URL;
-
 const getResource = url =>
   axios({
     method: "GET",
     url
   });
 
-const getCharacters = numberPage =>
+const getCharacters = page =>
   axios({
     method: "GET",
-    url: `${URL}?page=${numberPage}`
+    url: `https://swapi.co/api/people/?page=${page}`
   });
 
 export default {

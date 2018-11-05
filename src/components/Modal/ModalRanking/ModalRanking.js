@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Modal from "react-modal";
 import { func, bool, string, shape, arrayOf, number } from "prop-types";
 import close from "../close.svg";

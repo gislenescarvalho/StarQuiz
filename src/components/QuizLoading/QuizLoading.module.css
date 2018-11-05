@@ -1,0 +1,17 @@
+.gameLoadingWrapper {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 500px;
+  color: #ffffff;
+}
+
+.info {
+  margin-top: 2rem;
+}
+
+.contador {
+  font-size: 8rem;
+}

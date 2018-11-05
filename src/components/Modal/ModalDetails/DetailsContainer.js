@@ -71,9 +71,8 @@ const DetailsContainer = Component =>
     }
 
     componentDidMount() {
-      const { id, loadDetailsCharacter } = this.props;
-
-      loadDetailsCharacter(id);
+      // const { id, loadDetailsCharacter } = this.props;
+      // loadDetailsCharacter(id);
     }
 
     render() {
