@@ -11,6 +11,7 @@ import {
   bool
 } from "prop-types";
 import CardsContainer from "./CardsContainer";
+import { ModalDetails } from "../Modal";
 
 class Cards extends Component {
   render() {
@@ -23,9 +24,7 @@ class Cards extends Component {
       openedModal,
       openHintModal,
       play,
-      playerGuess,
-      showDetails,
-      showInput
+      playerGuess
     } = this.props;
     return (
       <article class="bg-white br3 center mw5 ba b--black-10 mv4">
@@ -41,19 +40,44 @@ class Cards extends Component {
         </ProgressiveImage>
 
         <div class="flex items-center justify-center pa4">
-          <div
-            class="f5 no-underline dark-blue bg-animate hover-bg-white hover-white inline-flex items-center pa3 ba br2 border-box mr4 pointer"
-            onClick={showDetails}
-          >
-            <span className={styles.question}>?</span>
-          </div>
-          <div
-            class="f5 no-underline dark-green bg-animate hover-bg-white hover-white inline-flex items-center pa3 ba br2 border-box pointer"
-            onClick={showInput}
-          >
-            <span className={styles.more}>...</span>
-          </div>
+          {!isPlaceholder
+            ? [
+                <div
+                  class="f5 no-underline dark-blue bg-animate hover-bg-white hover-white inline-flex items-center pa3 ba br2 border-box mr4 pointer"
+                  onClick={() => {
+                    openHintModal(id);
+                  }}
+                >
+                  <span className={styles.question}>?</span>
+                </div>,
+                <form class="pa4 black-80">
+                  <div class="measure">
+                    <input
+                      id="name"
+                      class="input-reset ba b--black-20 pa2 mb2 db w-100"
+                      placeholder="Personagem"
+                      value={playerGuess}
+                      onChange={event => {
+                        handleInputChange(event, id);
+                      }}
+                    />
+                  </div>
+                </form>
+              ]
+            : [
+                <div key="placeholder-1" className={styles.placeholder} />,
+                <div
+                  key="placeholder-2"
+                  className={`${styles.placeholder} ${styles.isButton}`}
+                />
+              ]}
         </div>
+        <ModalDetails
+          modalIsClosed={() => {
+            closeHintModal(id);
+          }}
+          modalDetailsIsOpen={openedModal && play}
+        />
       </article>
     );
   }
@@ -113,9 +137,7 @@ Cards.propTypes = {
       })
     ),
     arrayOf(string)
-  ]),
-  showDetails: func.isRequired,
-  showInput: func.isRequired
+  ])
 };
 
 export default CardsContainer(Cards);

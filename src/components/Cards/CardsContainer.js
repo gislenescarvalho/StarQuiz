@@ -65,9 +65,7 @@ const CardsContainer = Component =>
           })
         ),
         arrayOf(string)
-      ]),
-      showDetails: func.isRequired,
-      showInput: func.isRequired
+      ])
     };
 
     static defaultProps = {
